@@ -1,20 +1,20 @@
-html, body{
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
 }
-#camera, #camera-view, #camera-sensor, #camera-output{
+#camera, #camera canvas, #camera video, #camera img {
     position: fixed;
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
-#camera-view, #camera-sensor, #camera-output{
+#camera video, #camera canvas, #camera img {
     transform: scaleX(-1);
     filter: FlipH;
 }
-#camera-trigger{
+#camera button {
     width: 200px;
     background-color: black;
     color: white;
@@ -28,7 +28,7 @@ html, body{
     bottom: 30px;
     left: calc(50% - 100px);
 }
-#camera-output.taken{
+#camera img.captured {
     height: 100px;
     width: 100px;
     transition: all 0.5s ease-in;

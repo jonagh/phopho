@@ -1,28 +1,28 @@
-const cameraSensor = document.getElementById('camera-sensor'),
-      cameraView = document.getElementById('camera-view'),
-      cameraOutput = document.getElementById('camera-output'),
-      cameraTrigger = document.getElementById('camera-trigger');
+const elCanvas = document.querySelector('#camera canvas'),
+      elPlayer = document.querySelector('#camera video'),
+      elOutput = document.querySelector('#camera img'),
+      elButton = document.querySelector('#camera button');
 
-const userMediaConstraints = { audio: false, video: { facingMode: 'user' } };
+const userMediaConstraints = { audio: false, video: true };
 
-function startCamera() {
+function initialize() {
     navigator.mediaDevices
         .getUserMedia(userMediaConstraints)
         .then((stream) => {
-            track = stream.getTracks()[0];
-            cameraView.srcObject = stream;
+            elPlayer.srcObject = stream;
         })
         .catch((error) => {
-            console.error("Oops. Something is broken.", error);
+            console.error("initialize failed", error);
         });
 }
 
-window.addEventListener("load", startCamera, false);
+window.addEventListener("load", initialize, false);
 
-cameraTrigger.addEventListner('click', () => {
-    cameraSensor.width = cameraView.videoWidth;
-    cameraSensor.height = cameraView.videoHeight;
-    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-    cameraOutput.src = cameraSensor.toDataURL("image/webp");
-    cameraOutput.classList.add("taken");
+elButton.addEventListener('click', () => {
+    elCanvas.width = elPlayer.videoWidth;
+    elCanvas.height = elPlayer.videoHeight;
+    elCanvas.getContext("2d").drawImage(elPlayer, 0, 0);
+
+    elOutput.src = elCanvas.toDataURL("image/webp");
+    elOutput.classList.add("captured");
 });
